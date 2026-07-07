@@ -3,11 +3,11 @@ https://overthewire.org/wargames/bandit/
 #username:password are located in this notes.txt
 #cat notes.txt |grep for LEVEL, use this command to ssh to next bandit server, update username
 
-#level0
+#level 0
 ssh -p 2220 bandit0@bandit.labs.overthewire.org
 bandit0:bandit0
 
-#level1
+#level 1
 #cat readme |grep password| awk '{print $8}'
 bandit1:6y2kwnwK6grgvwvpvLaa2T1cpFEKOhNR
 
@@ -18,46 +18,115 @@ bandit1:6y2kwnwK6grgvwvpvLaa2T1cpFEKOhNR
 #sshpass -p "$(grep '^bandit0:' notes.txt | cut -d':' -f2)" ssh -p 2220 bandit0@bandit.labs.overthewire.org
 LEVEL=bandit0; sshpass -p "$(grep "^${LEVEL}:" notes.txt | cut -d':' -f2)" ssh -p 2220 ${LEVEL}@bandit.labs.overthewire.org
 
-#level2
+#level 2
 #cat ./-
 bandit2:PK8fYLZg2hnHSz83plBL1iEPKdD3QToB
 
-#level3
+#level 3
 #cat ./--spaces\ in\ this\ filename--
 bandit3:7ZZ2LFrykP2zEyvBl4m3clcL7tGYJPME
 
-#level4
+#level 4
 # cd inhere
 # cat ...Hiding-From-You
 bandit4:xzTXq1rDJQVVAzdv5cHq1TQytTWufAMq
 
-#level5
+#level 5
 #find . -type f -name "-*" -print0 | xargs -0 awk 'FNR==1{print "\n### FILE:", FILENAME, "###"} {print}'
 # file ./-file*; cat ./-file07
 bandit5:6C7h9GD8M6ai5nr7wo1RonrzFjj9yIrG
 
-#level6
+#level 6
 # find ~/inhere -type f -size 1033c ! -executable -exec cat {} \;
 bandit6:pXa26xhMWaC2SvDotA4r9EgZkulOeSBW
 
-#level7
+#level 7
 #find / -type f -user bandit7 -group bandit6 -size 33c 2>/dev/null   
 #/var/lib/dpkg/info/bandit7.password
 bandit7:Bmnnvf82KzQlfxgAI2d1zYbr1u9pr3E3
 
-#level8
+#level 8
 #cat data.txt |grep millionth|awk {'print $2'}
 bandit8:VR1ljMayciFxbnUokuQmJFw6QC9VKtub
 
-#level9
+#level 9
 #sort data.txt |uniq -u
 bandit9:EjmOSvuAu7sGAHqHVcBDPirRe9T03kxl
 
-#level10
+#level 10
 #grep -a '=.*=' data.txt
 #strings data.txt|grep '=.*='
 bandit10:B0s2khmbT9u0geKuOoVGW3JZKhndE3BG
 
-#level11
+#level 11
+#cat data.txt | base64 -d| awk {'print $4'}
+bandit11:pYfOY6HwUsDj5rL9UvyhU7MCmv8vN5Ro
 
+#level 12
+#cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'|awk {'print $4'}
+bandit12:GROozWPO8QyN0mGrjUkID0WCYkZiQxrN
 
+########################################################
+#level 13
+#$tmpdir=$(mktemp -d)
+cp data.txt $tmpdir/data.txt
+cd $tmpdir
+# convert hexdump file back to raw binary, optional verify conversion xxd data.bin or hexdump -C data.bin
+xxd -r data.txt > data.bin
+
+# identify file type
+file data.bin 
+#data.bin: gzip compressed data, was "data2.bin", last modified: Wed Jun 24 14:58:46 2026, max compression, from Unix, original size modulo 2^32 580
+#(the file is compress with gzip, cp data.bin to data.gz, use file to check file type)
+cp data.bin data.gz
+gzip -d data.gz
+
+file data
+#data: bzip2 compressed data, block size = 900k
+#(the file is compressed with bzip2, mv data data.bz2)
+mv data data.bz2
+bzip2 -d data.bz2
+
+file data
+#data: gzip compressed data, was "data4.bin", last modified: Wed Jun 24 14:58:46 2026, max compression, from Unix, original size modulo 2^32 20480
+#(the file is still compress with gzip, mv data data.gz)
+mv data data.gz
+gzip -d data.gz
+
+file data
+#data: POSIX tar archive (GNU)
+cat data
+#data5.bin0000644000000000000000000002400015216770246011252 0ustar  rootrootdata6.bin0000644000000002▒Mi▒000▒=M=@҃▒FF▒▒ ▒dh▒▒▒▒▒$▒▒F▒F▒▒`bƙ▒▒D▒▒▒▒▒▒▒=l▒"▒3▒▒▒▒1▒▒ ▒▒▒▒▒\@▒W▒▒P#▒t1▒▒LF|▒ ▒
+#▒ED▒I▒▒▒x▒CI▒▒▒▒▒ѽ▒)▒U1▒唯͘▒rE8P▒%▒▒`
+xxd data |head
+#(the file is archived, need to use tar to extract the file)
+mv data data.tar
+tar -xf data.tar
+# data5.bin is extracted out, which is another archived file
+file data5.bin
+#data5.bin: POSIX tar archive (GNU)
+tar -xf data5.bin
+
+# data6.bin is extracted, file data6.bin shows its compress with bzip2
+file data6.bin
+#data6.bin: bzip2 compressed data, block size = 900k
+bzip2 -d data6.bin
+bzip2: Can't guess original name for data6.bin -- using data6.bin.out
+
+file data6.bin.out 
+#(the file is another archived tar)
+tar -xf data6.bin.out
+#data8.bin is extracted out) 
+#data8.bin: gzip compressed data, was "data9.bin", last modified: Wed Jun 24 14:58:46 2026, max comression, from Unix, original size modulo 2^32 49
+
+mv data8.bin data8.gz
+gzip -d data8.gz
+
+file data8
+#data8: ASCII text
+cat data8
+cat data8|awk {'print $4'}
+
+bandit13:qQYQiHOBPR8zR61qxYqX45quvihF2uzk
+####################################################################
+#level 14
