@@ -12,7 +12,7 @@ The **Bandit** wargame is a beginner-focused **Capture The Flag (CTF)** challeng
 
 ## https://overthewire.org/wargames/bandit/bandit0.html
 ```brew install sshpass```<br>
-<b>user:password </b>are located inside the file <b>notes.txt</b>
+<b>user:password </b>are located inside the file <b>notes.txt , notes.txt includes notes, cmd lines, and solutions for each levels</b>
 
 ### Shortcut CMD to ssh into next host server
 [replace username to connect to next host server:]<br>
