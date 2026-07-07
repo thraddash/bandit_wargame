@@ -1,0 +1,63 @@
+https://overthewire.org/wargames/bandit/
+#brew install sshpass
+#username:password are located in this notes.txt
+#cat notes.txt |grep for LEVEL, use this command to ssh to next bandit server, update username
+
+#level0
+ssh -p 2220 bandit0@bandit.labs.overthewire.org
+bandit0:bandit0
+
+#level1
+#cat readme |grep password| awk '{print $8}'
+bandit1:6y2kwnwK6grgvwvpvLaa2T1cpFEKOhNR
+
+#ssh -p 2220 bandit1@bandit.labs.overthewire.org
+#cat notes.txt |grep '^bandit.*:'
+
+#brew install sshpass
+#sshpass -p "$(grep '^bandit0:' notes.txt | cut -d':' -f2)" ssh -p 2220 bandit0@bandit.labs.overthewire.org
+LEVEL=bandit0; sshpass -p "$(grep "^${LEVEL}:" notes.txt | cut -d':' -f2)" ssh -p 2220 ${LEVEL}@bandit.labs.overthewire.org
+
+#level2
+#cat ./-
+bandit2:PK8fYLZg2hnHSz83plBL1iEPKdD3QToB
+
+#level3
+#cat ./--spaces\ in\ this\ filename--
+bandit3:7ZZ2LFrykP2zEyvBl4m3clcL7tGYJPME
+
+#level4
+# cd inhere
+# cat ...Hiding-From-You
+bandit4:xzTXq1rDJQVVAzdv5cHq1TQytTWufAMq
+
+#level5
+#find . -type f -name "-*" -print0 | xargs -0 awk 'FNR==1{print "\n### FILE:", FILENAME, "###"} {print}'
+# file ./-file*; cat ./-file07
+bandit5:6C7h9GD8M6ai5nr7wo1RonrzFjj9yIrG
+
+#level6
+# find ~/inhere -type f -size 1033c ! -executable -exec cat {} \;
+bandit6:pXa26xhMWaC2SvDotA4r9EgZkulOeSBW
+
+#level7
+#find / -type f -user bandit7 -group bandit6 -size 33c 2>/dev/null   
+#/var/lib/dpkg/info/bandit7.password
+bandit7:Bmnnvf82KzQlfxgAI2d1zYbr1u9pr3E3
+
+#level8
+#cat data.txt |grep millionth|awk {'print $2'}
+bandit8:VR1ljMayciFxbnUokuQmJFw6QC9VKtub
+
+#level9
+#sort data.txt |uniq -u
+bandit9:EjmOSvuAu7sGAHqHVcBDPirRe9T03kxl
+
+#level10
+#grep -a '=.*=' data.txt
+#strings data.txt|grep '=.*='
+bandit10:B0s2khmbT9u0geKuOoVGW3JZKhndE3BG
+
+#level11
+
+
