@@ -232,3 +232,105 @@ cat cronjob_bandit23.sh
 bandit23:gKXDTAXnIz3OBxiPjRZ2uqutUlPZrBsw
 #############################################
 #level 23
+cat /usr/bin/cronjob_bandit24.sh
+
+#@reboot bandit24 /usr/bin/cronjob_bandit24.sh &> /dev/null
+#* * * * * bandit24 /usr/bin/cronjob_bandit24.sh &> /dev/null
+
+cat /usr/bin/cronjob_bandit24.sh
+
+##!/bin/bash
+#shopt -s nullglob
+#myname=$(whoami)
+
+#cd /var/spool/"$myname"/foo || exit
+#echo "Executing and deleting all scripts in /var/spool/$myname/foo:"
+#for i in * .*;
+#do
+#    if [ "$i" != "." ] && [ "$i" != ".." ];
+#    then
+#        echo "Handling $i"
+#        owner="$(stat --format "%U" "./$i")"
+#        if [ "${owner}" = "bandit23" ] && [ -f "$i" ]; then
+#            timeout -s 9 60 "./$i"
+#        fi
+#        rm -rf "./$i"
+#    fi
+#done
+
+#(have write access in foo)
+#bandit23@bandit:/tmp/temp$ ls -lah /var/spool/bandit24/
+#total 12K
+#dr-xr-x--- 3 bandit24 bandit23 4.0K Jun 24 14:59 .
+#drwxr-xr-x 6 root     root     4.0K Jun 24 15:02 ..
+#drwxrwx-wx 6 root     bandit24 4.0K Jul  8 21:03 foo
+
+#create bash script to get the level 24 password stored in /etc/bandit_pass/bandit24
+#note this file is only readable by user bandit24, we are currently logged in as user bandit23
+#looking at the cronjob /usr/bin/cronjob_bandit24.sh is executed every minutes/hours/dom/month/dow , also shows that the script is executed if the server is rebooted.
+
+#decipering the cronjob_bandit24.sh
+#shopt -s nullglob  -> Bash shell setting, changes how shell heandles file pattern (globs) that does not match any existing files. 
+# prevent logic error in loop
+# without nullglob, a loop like for f in *.txt; do ... done will execute once, if no .txt files exist, setting the variable f to the string *.txt
+# This may cause the script to try to process a file literally named *.txt.
+# with empty expansion, the loop simly does not run, if a file pattern (glob) like * matches zero files, it should expand to nothing (an empty list) instead of expanding to the literal string *.
+
+#myname=$(whoami) -> bandit24
+
+#cd /var/spool/"$myname"/foo || exit  -> cd /var/spool/bandit24/foo , if unable to cd to this directory exit script
+#echo "Executing and deleting all scripts in /var/spool/$myname/foo:" ->prints notification that any scripts in dir path /var/spool/bandit24/foo will be deleted  
+#for i in * .*;  -> *: matches any non-hidden file in the current directory, ex: test.sh, data.txt, image.jpg
+		 -> .*: match any thing that begins with a dot, including zero characters, ex: .bashrc, . , ..
+#		 -> since .* matches . (current directory and .. (parent directory) safety check if [ "$i" != "." ] && [ "$i" != ".." ] is needed to prevent accidentally deleteing entire filesystem 
+
+#do
+#    if [ "$i" != "." ] && [ "$i" != ".." ]; -> prevent script from processing current directory and parent directory
+#    then
+#        echo "Handling $i"		     -> print filename of the current item in the loop from current directory 
+#        owner="$(stat --format "%U" "./$i")" -> display file or filesystem status , --format "%U" tells stat to output only owner's username, 
+#						 bandit23 should show up since I have cp script_level24.sh that is owned by bandit23
+# 
+#							     -> ######### Check Ownership & Type ############
+#        if [ "${owner}" = "bandit23" ] && [ -f "$i" ]; then -> Authroization check, verifies if file is owned by only user bandit23 and is a regular file, then execute 
+#							     -> [ -f "$i" ] safety check, -f is a file test operator in bash, checks if a file exists and is a regular file, 
+#							     -> return false if directories, symbolic links, device files, sockets
+#            timeout -s 9 60 "./$i"	-> executes the script in the current directory with a strict 60 second time limit before  -s 9 , signal 9 aka SIGKILL, which immediately terminates the process , only runs if criteria are met, if not met file is deleted and moves to next item
+#        fi
+#        rm -rf "./$i"			-> file will be delete regardless if criteria are met 
+#    fi
+#done
+
+ 
+mkdir /tmp/temp
+cd /tmp/temp
+vi script_level24.sh
+##!/bin/bash
+cat /etc/bandit_pass/bandit24 > /tmp/temp/password
+
+# chmod 755, set permission rwxr-xr-x , grants Read + Execute permission to "others", which allow bandit24 to read and execute even if script is owned by bandit23
+chmod 755 script_level24.sh
+or
+chmod u+x,o+rx script_level24.sh
+
+#copy script_level24.sh over to /var/spool/bandit24/foo where the conjob is triggered
+cp script_level24.sh /var/spool/bandit24/foo/
+
+# create a file password so the password can be stored with cronjob is triggered
+touch password
+
+# grant full read,write,execute permission to file owner, group, and all users on system so bandit24 user can write password into the file
+chmod 777 -R /tmp/temp
+
+#bandit23@bandit:/var/spool/bandit24$ ls -lah
+#total 12K
+#dr-xr-x--- 3 bandit24 bandit23 4.0K Jun 24 14:59 .
+#drwxr-xr-x 6 root     root     4.0K Jun 24 15:02 ..
+#drwxrwx-wx 6 root     bandit24 4.0K Jul  8 22:19 foo
+
+# note: only user bandit24 can read this file
+#bandit23@bandit:/tmp/temp$ ls -lah /etc/bandit_pass/bandit24
+#-r-------- 1 bandit24 bandit24 33 Jun 24 14:58 /etc/bandit_pass/bandit24
+
+bandit24:hVQMk3lJNsmQ7VF3ubyrNNBom7BOgVXv
+
