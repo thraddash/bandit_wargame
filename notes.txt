@@ -202,4 +202,33 @@ bandit20@bandit:~$ ./suconnect 9091
 bandit21:bW9kBv5WC3P4yoDyf12LSdGuNz5ka6hY
 #########################################
 #level 21
+cat /usr/bin/cronjob_bandit22.sh
+##!/bin/bash
+#chmod 644 /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+#cat /etc/bandit_pass/bandit22 > /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
 
+bandit22:RYVux2rHEm9tiXHmLFzuR7Vhx6AZQMEz
+##########################################
+#level 22
+ls /etc/cron.d/
+#behemoth4_cleanup  cronjob_bandit22  cronjob_bandit24  leviathan5_cleanup    otw-tmp-dir
+#clean_tmp          cronjob_bandit23  e2scrub_all       manpage3_resetpw_job
+
+cat cronjob_bandit23.sh
+##!/bin/bash
+
+#myname=$(whoami)
+#mytarget=$(echo I am user $myname | md5sum | cut -d ' ' -f 1)
+#echo "Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget"
+#cat /etc/bandit_pass/$myname > /tmp/$mytarget
+
+#8ca319486bfbbc3663ea0fbe81326349 -
+#cut -d ' ' -f 1
+#8ca319486bfbbc3663ea0fbe81326349
+
+#cat /tmp/8ca319486bfbbc3663ea0fbe81326349
+#gKXDTAXnIz3OBxiPjRZ2uqutUlPZrBsw
+bandit23:gKXDTAXnIz3OBxiPjRZ2uqutUlPZrBsw
+#############################################
+#level 23
