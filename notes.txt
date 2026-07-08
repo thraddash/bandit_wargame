@@ -152,6 +152,8 @@ echo "pbLYuZtTg4MgaqfJx8jbA9gKKGqM68A7" | socat - OPENSSL:localhost:30001,verify
 bandit16:kS0Hf0u5HiXFwKMKFqXvPdOTNGGa0X8V
 ########################################################
 #level 17
+nmap -sV -T4 -p 31000-32000 localhost
+or
 echo "kS0Hf0u5HiXFwKMKFqXvPdOTNGGa0X8V" | nc -zv localhost 31000-32000 2>&1| grep succeeded
 Connection to localhost (127.0.0.1) 31046 port [tcp/*] succeeded!
 Connection to localhost (127.0.0.1) 31518 port [tcp/*] succeeded!
