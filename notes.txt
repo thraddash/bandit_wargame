@@ -130,3 +130,52 @@ cat data8|awk {'print $4'}
 bandit13:qQYQiHOBPR8zR61qxYqX45quvihF2uzk
 ####################################################################
 #level 14
+#localhost
+LEVEL=bandit13; sshpass -p "$(grep "^${LEVEL}:" notes.txt | cut -d':' -f2)" scp -P 2220 ${LEVEL}@bandit.labs.overthewire.org:/home/bandit13/sshkey.private .
+
+chmod 600 sshkey.private
+ssh -p 2220 -i sshkey.private bandit14@bandit.labs.overthewire.org  "cat /etc/bandit_pass/bandit14"
+bandit14:aaWecNkG4FhxJQxz07uiwzVP6bJiYS65
+###################################################################
+#level 15
+LEVEL=bandit14; sshpass -p "$(grep "^${LEVEL}:" notes.txt | cut -d':' -f2)" ssh -p 2220 ${LEVEL}@bandit.labs.overthewire.org
+echo "aaWecNkG4FhxJQxz07uiwzVP6bJiYS65" | nc localhost 30000
+bandit15:pbLYuZtTg4MgaqfJx8jbA9gKKGqM68A7
+##################################################################
+#level 16
+echo "pbLYuZtTg4MgaqfJx8jbA9gKKGqM68A7" | ncat --ssl localhost 30001 |awk 'NR==2 {print}'
+#or
+echo "pbLYuZtTg4MgaqfJx8jbA9gKKGqM68A7" | openssl s_client -quiet -connect localhost:30001
+#or
+echo "pbLYuZtTg4MgaqfJx8jbA9gKKGqM68A7" | socat - OPENSSL:localhost:30001,verify=0
+
+bandit16:kS0Hf0u5HiXFwKMKFqXvPdOTNGGa0X8V
+########################################################
+#level 17
+echo "kS0Hf0u5HiXFwKMKFqXvPdOTNGGa0X8V" | nc -zv localhost 31000-32000 2>&1| grep succeeded
+Connection to localhost (127.0.0.1) 31046 port [tcp/*] succeeded!
+Connection to localhost (127.0.0.1) 31518 port [tcp/*] succeeded!
+Connection to localhost (127.0.0.1) 31691 port [tcp/*] succeeded!
+Connection to localhost (127.0.0.1) 31790 port [tcp/*] succeeded!
+Connection to localhost (127.0.0.1) 31960 port [tcp/*] succeeded!
+
+echo "kS0Hf0u5HiXFwKMKFqXvPdOTNGGa0X8V" | nc -zv localhost 31000-32000 2>&1| grep succeeded| awk '{print $5}'| xargs -I {} sh -c 'echo "###### Testing port: {} ######"; echo "kS0Hf0u5HiXFwKMKFqXvPdOTNGGa0X8V"| openssl s_client -quiet -connect localhost:{}'
+###### Testing port: 31790 ######
+echo "kS0Hf0u5HiXFwKMKFqXvPdOTNGGa0X8V"| openssl s_client -quiet -connect localhost:31790
+
+#Use sed to grab data from line that starts with BEGIN, ends with line END
+
+tmpdir=$(mktemp -d);echo "kS0Hf0u5HiXFwKMKFqXvPdOTNGGa0X8V"| openssl s_client -quiet -connect localhost:31790 | sed -n '/-----BEGIN OPENSSH PRIVATE KEY-----/,/-----END OPENSSH PRIVATE KEY-----/p' > "$tmpdir/private.key"
+
+cd tmpdir
+/tmp/tmp.R7qiFsjgkn
+
+#update the temporary directory path to retreive the private.key, when using scp
+LEVEL=bandit16; sshpass -p "$(grep "^${LEVEL}:" notes.txt | cut -d':' -f2)" scp -P 2220 ${LEVEL}@bandit.labs.overthewire.org:/tmp/tmp.R7qiFsjgkn/private.key .
+
+chmod 400 private.key
+ssh -p2220 -i private.key bandit17@bandit.labs.overthewire.org
+###################################################################
+#level 17
+ssh -p2220 -i private.key bandit17@bandit.labs.overthewire.org
+
