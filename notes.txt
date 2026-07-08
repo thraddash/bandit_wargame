@@ -180,4 +180,26 @@ ssh -p2220 -i private.key bandit17@bandit.labs.overthewire.org
 ###################################################################
 #level 17
 ssh -p2220 -i private.key bandit17@bandit.labs.overthewire.org
+diff passwords.new passwords.old
+bandit18:OQxXZjELndr90zuhOTDYBEomI0SZITXI
+###########################################
+#level 18
+LEVEL=bandit18; sshpass -p "$(grep "^${LEVEL}:" notes.txt | cut -d':' -f2)" ssh -p 2220 ${LEVEL}@bandit.labs.overthewire.org
+LEVEL=bandit18; sshpass -p "$(grep "^${LEVEL}:" notes.txt | cut -d':' -f2)" ssh -p 2220 ${LEVEL}@bandit.labs.overthewire.org "cat readme"
+###########################################
+#level 19
+bandit19:KpsOfPkcP7i1FlIExk2QEjyt6dw8dxZI
+./bandit20-do cat /etc/bandit_pass/bandit20
+bandit20:4pIjcunZ0fK2vmp3IwfG8Vf7VhxD6pOA
+########################################
+#level 20
+ls -l
+#total 16
+#-rwsr-x--- 1 bandit21 bandit20 15604 Jun 24 14:58 suconnect
+bandit20@bandit:~$ echo "4pIjcunZ0fK2vmp3IwfG8Vf7VhxD6pOA" | nc -l -p 9091
+#In another terminal logged in as bandit20
+bandit20@bandit:~$ ./suconnect 9091
+bandit21:bW9kBv5WC3P4yoDyf12LSdGuNz5ka6hY
+#########################################
+#level 21
 
