@@ -517,3 +517,118 @@ bandit30:jq9Dfg2rXsfYsWMgFuKlXhphjdH7USgX
 #There is a git repository at ssh://bandit30-git@bandit.labs.overthewire.org/home/bandit30-git/repo via the port 2220. 
 #The password for the user bandit30-git is the same as for the user bandit30
 
+LEVEL=bandit30; sshpass -p "$(grep "^${LEVEL}:" notes.txt | cut -d':' -f2)" git clone ssh://bandit30-git@bandit.labs.overthewire.org:2220/home/bandit30-git/repo
+
+cat README.md
+#just an epmty file... muahaha
+
+git tag
+or 
+git tag -l
+#secret
+
+git show secret
+#82NkymblpGBYmIXG6ZQ8YldBYstHpfUf
+
+bandit31:82NkymblpGBYmIXG6ZQ8YldBYstHpfUf
+###############################################
+#level 31
+
+#There is a git repository at ssh://bandit31-git@bandit.labs.overthewire.org/home/bandit31-git/repo via the port 2220.
+#The password for the user bandit31-git is the same as for the user bandit31.
+
+LEVEL=bandit31; sshpass -p "$(grep "^${LEVEL}:" notes.txt | cut -d':' -f2)" git clone ssh://bandit31-git@bandit.labs.overthewire.org:2220/home/bandit31-git/repo
+
+cat README.md
+#This time your task is to push a file to the remote repository.
+#
+#Details:
+#    File name: key.txt
+#    Content: 'May I come in?'
+#    Branch: master
+
+cat .gitignore
+*.txt
+
+echo 'May I come in?' > key.txt
+git add -f key.txt
+git commit -a
+git commit -m "blah"
+git push origin master
+
+##bandit31-git@bandit.labs.overthewire.org's password:
+#Enumerating objects: 4, done.
+#Counting objects: 100% (4/4), done.
+#Delta compression using up to 4 threads
+#Compressing objects: 100% (2/2), done.
+#Writing objects: 100% (3/3), 314 bytes | 314.00 KiB/s, done.
+#Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+#remote: ### Attempting to validate files... ####
+#remote:
+#remote: .oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
+#remote:
+#remote: Well done! Here is the password for the next level:
+#remote: pWuj5jBQ6IgV0NXwiH6g1pXRF8S1YvbT
+#remote:
+#remote: .oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
+#remote:
+#To ssh://bandit.labs.overthewire.org:2220/home/bandit31-git/repo
+# ! [remote rejected] master -> master (pre-receive hook declined)
+#error: failed to push some refs to 'ssh://bandit.labs.overthewire.org:2220/home/bandit31-git/repo'
+
+#git remote -v
+#origin  ssh://bandit31-git@bandit.labs.overthewire.org:2220/home/bandit31-git/repo (fetch)
+#origin  ssh://bandit31-git@bandit.labs.overthewire.org:2220/home/bandit31-git/repo (push)
+
+#option 1
+#Crtl+v
+# use j (down) or k (up)
+# shift + I  
+# type comment character #
+# press esc
+
+#option 2
+#shift+v
+#press :
+#'<,'>'s/^/#/
+
+bandit32:pWuj5jBQ6IgV0NXwiH6g1pXRF8S1YvbT
+#######################################################
+#level 32
+
+#WELCOME TO THE UPPERCASE SHELL
+#>> ls
+#sh: 1: LS: Permission denied
+
+$0
+>> $0
+$ ls -lah
+total 36K
+drwxr-xr-x   2 root     root     4.0K Jun 24 14:59 .
+drwxr-xr-x 150 root     root     4.0K Jun 24 15:02 ..
+-rw-r--r--   1 root     root      220 Feb 13 12:16 .bash_logout
+-rw-r--r--   1 root     root     3.8K Jun 24 14:50 .bashrc
+-rw-r--r--   1 root     root      807 Feb 13 12:16 .profile
+-rwsr-x---   1 bandit33 bandit32  15K Jun 24 14:59 uppershell
+
+$ whoami 
+bandit33
+
+$ cat /etc/bandit_pass/bandit33
+u4P2CyPOwPGLe94RdD9Uo2FxFwvnFswM
+
+bandit33:u4P2CyPOwPGLe94RdD9Uo2FxFwvnFswM
+###########################################################
+# level 33
+
+bandit33@bandit:~$ ls
+README.txt
+bandit33@bandit:~$ cat README.txt
+Congratulations on solving the last level of this game!
+
+At this moment, there are no more levels to play in this game. However, we are constantly working
+on new levels and will most likely expand this game with more levels soon.
+Keep an eye out for an announcement on our usual communication channels!
+In the meantime, you could play some of our other wargames.
+
+If you have an idea for an awesome new level, please let us know!
