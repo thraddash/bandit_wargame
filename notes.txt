@@ -348,3 +348,172 @@ netcat localhost 30002
 bandit25:SoHfqMOEqIX2IYKVciZxvgpR9a2Djx4P
 ############################################
 #level 25
+cat /etc/passwd |grep bandit26
+#bandit26:x:11026:11026:bandit level 26:/home/bandit26:/usr/bin/showtext
+
+ls -lah /usr/bin/showtext
+#-rwxr-xr-x 1 root root 58 Jun 24 14:59 /usr/bin/showtext
+
+cat /usr/bin/showtext
+##!/bin/sh
+#export TERM=linux
+#exec more ~/text.txt
+#exit 0
+
+cd /home/bandit25
+#bandit25@bandit:~$ ls
+#bandit26.sshkey
+
+#copy  bandit26.sshkey to localhost system
+
+LEVEL=bandit25; sshpass -p "$(grep "^${LEVEL}:" notes.txt | cut -d':' -f2)" scp -P 2220 ${LEVEL}@bandit.labs.overthewire.org:/home/bandit25/bandit26.sshkey .
+
+chmod 600 bandit26.sshkey
+ssh -p 2220 -i bandit26.sshkey bandit26@bandit.labs.overthewire.org
+
+#using putty resize window row to 5
+#used puttygen and load bandit26.sshkey , save file bandit26.ppk for putty
+#In side putty Connection>SSH>Auth>Credential> Private key file for authentication (select bandit26.ppk file)
+
+#when prompted --More--, press v to open vi editor
+#In the more and less pagers, pressing v is a built-in shortcut to edit the current file, in editor mode you can use colon e to open files
+:e /etc/bandit_pass/bandit26
+:set shell=/bin/bash
+:shell
+
+bandit26:jHdv2ELQhT22BkprMNDjybZDAkw1zeBJ
+
+#############################################
+#level 26
+#note: cannot ssh directly from pc to bandit26, because of the restricted shell, use the level 25 resize trick
+#putty bandit26.ppk , use v, 
+:set shell=/bin/bash/
+:shell
+
+#bandit26@bandit:~$ ls
+#bandit27-do  text.txt
+ ./bandit27-do cat /etc/bandit_pass/bandit27
+bandit27:STJLJBRRphMxKB392CT4iOr5CbzPU9ER
+###########################################
+#level 27
+
+#There is a git repository at ssh://bandit27-git@bandit.labs.overthewire.org/home/bandit27-git/repo via the port 2220.
+#The password for the user bandit27-git is the same as for the user bandit27.
+
+#ssh://bandit27-git@bandit.labs.overthewire.org/home/bandit27-git/repo port 2220
+#user:bandit27-git 
+#password:STJLJBRRphMxKB392CT4iOr5CbzPU9ER
+
+#git clone repo using level 27 password
+
+#sshpass -p 'STJLJBRRphMxKB392CT4iOr5CbzPU9ER' git clone clone ssh://bandit27-git@bandit.labs.overthewire.org:2220/home/bandit27-git/repo
+
+LEVEL=bandit27; sshpass -p "$(grep "^${LEVEL}:" notes.txt | cut -d':' -f2)" git clone ssh://bandit27-git@bandit.labs.overthewire.org:2220/home/bandit27-git/repo
+cat README
+#The password to the next level is: y8Yd2ssKcpHpud7UvOSOxwamRMzIGIeQ
+cat README | awk {'print $8'}
+bandit28:y8Yd2ssKcpHpud7UvOSOxwamRMzIGIeQ
+############################################
+#level 28
+
+#There is a git repository at ssh://bandit28-git@bandit.labs.overthewire.org/home/bandit28-git/repo via the port 2220.
+#The password for the user bandit28-git is the same as for the user bandit28.
+
+LEVEL=bandit28; sshpass -p "$(grep "^${LEVEL}:" notes.txt | cut -d':' -f2)" git clone ssh://bandit28-git@bandit.labs.overthewire.org:2220/home/bandit28-git/repo
+
+#README.md
+# Bandit Notes
+#Some notes for level29 of bandit.
+## credentials
+#- username: bandit29
+#- password: xxxxxxxxxx
+
+bandit29:xxxxxxxxxx
+###########################################
+#level 29
+
+#There is a git repository at ssh://bandit29-git@bandit.labs.overthewire.org/home/bandit29-git/repo via the port 2220. 
+#The password for the user bandit29-git is the same as for the user bandit29.
+
+#user:bandit29-git
+#password:xxxxxxxxxx
+
+LEVEL=bandit29; sshpass -p "$(grep "^${LEVEL}:" notes.txt | cut -d':' -f2)" git clone ssh://bandit29-git@bandit.labs.overthewire.org:2220/home/bandit29-git/repo 
+
+git log
+
+#commit 83d77407b76c9f86ac4e691a47618641c9d527ba (HEAD -> master, origin/master, origin/HEAD)
+#Author: Morla Porla <morla@overthewire.org>
+#Date:   Wed Jun 24 14:59:06 2026 +0000
+#
+#    fix info leak
+#
+#commit 13bbc4d2414ffe0439b8ee4f5e5c2949780cf4b3
+#Author: Morla Porla <morla@overthewire.org>
+#Date:   Wed Jun 24 14:59:06 2026 +0000
+#
+#    add missing data
+#
+#commit f3334fbccbf9446a6af88a3c71021c2f57163322
+#Author: Ben Dover <noone@overthewire.org>
+#Date:   Wed Jun 24 14:59:06 2026 +0000
+#
+#    initial commit of README.md
+-----------------------------------------------------------
+
+git show 83d77407b76c9f86ac4e691a47618641c9d527ba
+
+#commit 83d77407b76c9f86ac4e691a47618641c9d527ba (HEAD -> master, origin/master, origin/HEAD)
+#Author: Morla Porla <morla@overthewire.org>
+#Date:   Wed Jun 24 14:59:06 2026 +0000
+#
+#    fix info leak
+#
+#diff --git a/README.md b/README.md
+#index 42331d9..5c6457b 100644
+#--- a/README.md
+#+++ b/README.md
+#@@ -4,5 +4,5 @@ Some notes for level29 of bandit.
+# ## credentials
+#
+# - username: bandit29
+#-- password: Em7eGtqaMySwNFjCpwzzHhLhospOcdt0
+#+- password: xxxxxxxxxx
+
+bandit29_30:Em7eGtqaMySwNFjCpwzzHhLhospOcdt0
+
+LEVEL=bandit29_30; sshpass -p "$(grep "^${LEVEL}:" notes.txt | cut -d':' -f2)" git clone ssh://bandit29-git@bandit.labs.overthewire.org:2220/home/bandit29-git/repo
+
+ls
+#README.md
+
+# Bandit Notes
+#Some notes for bandit30 of bandit.
+#
+## credentials
+#
+#- username: bandit30
+#- password: <no passwords in production!>
+
+git branch -a
+#list all known branches
+
+#* master
+#  remotes/origin/HEAD -> origin/master
+#  remotes/origin/dev
+#  remotes/origin/master
+#  remotes/origin/sploits-dev
+
+git switch dev
+cat README.md
+
+- username: bandit30
+- password: jq9Dfg2rXsfYsWMgFuKlXhphjdH7USgX
+
+bandit30:jq9Dfg2rXsfYsWMgFuKlXhphjdH7USgX
+#############################################
+#level 30
+
+#There is a git repository at ssh://bandit30-git@bandit.labs.overthewire.org/home/bandit30-git/repo via the port 2220. 
+#The password for the user bandit30-git is the same as for the user bandit30
+
